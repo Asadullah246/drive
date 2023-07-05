@@ -1,9 +1,11 @@
+import Card from "../../components/Card";
+
 
 
 const Home = () => {
   return (
     <div>
-      this is home
+      <Card/>
     </div>
   );
 };
