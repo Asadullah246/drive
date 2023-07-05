@@ -3,7 +3,7 @@
 const Category1 = () => {
     return (
         <div>
-this is category 1
+            this is category 1
         </div>
     );
 };
