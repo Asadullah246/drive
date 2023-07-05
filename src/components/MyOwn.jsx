@@ -18,6 +18,7 @@ const MyOwn = () => {
                             <th></th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {/* row 1 */}
                         <tr>
@@ -140,6 +141,7 @@ const MyOwn = () => {
                             </th>
                         </tr>
                     </tbody>
+
                     {/* foot */}
                     <tfoot>
                         <tr>
