@@ -1,14 +1,17 @@
+
 import LoadingButton from "@mui/lab/LoadingButton";
+
+
 const UploadProduct = () => {
     const upload=(e)=>{
-        e.preventDefault() 
+        e.preventDefault()
         console.log(e.target.category.value);
     }
   return (
     <div>
       <h4 className="text-3xl"> Upload Document</h4>
       <div className=" w-full lg:w-[600px]">
-        <form action="" className="my-8 w-full" onSubmit={upload}>
+        <form action="" className="my-8 w-full uploadForm" onSubmit={upload}>
           <div className="w-full flex justify-between items-center gap-4 mb-4">
             <label className="w-1/3" htmlFor="">
               Doc Name :{" "}
@@ -105,6 +108,17 @@ const UploadProduct = () => {
             </div>
           </div>
 
+          <div className="w-full flex justify-between items-center gap-4 mb-4">
+            <label className="w-1/3" htmlFor="">
+              Image :{" "}
+            </label>
+            <input
+              type="file"
+              name="name"
+              id=""
+              className="w-2/3 border-2 rounded-md p-1"
+            />
+          </div>
           <div className="w-full flex justify-between items-center gap-4 mb-4">
             <label className="w-1/3" htmlFor="">
               Document :{" "}
