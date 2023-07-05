@@ -6,8 +6,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { AppContext } from "../../app.context";
 
 const removeDuplicate = (arr) => {
   // const uniqueArray = [...new Set(arr)];
@@ -114,12 +115,15 @@ const Dashboard = () => {
   const [personName3, setPersonName3] = useState([]);
   const [pageR, setPageR] = useState(false);
   const [allData, setAllData] = useState([]);
+//   const [allData2, ] = useState([]);
   const [cat1, setCat1] = useState([]);
   const [cat2, setCat2] = useState([]);
   const [setCat3, setCat3setCat3] = useState([]);
+  const { allData2, setAllData2 } = useContext(AppContext);
 
   useEffect(() => {
     setAllData(productData);
+    setAllData2(productData) 
   }, []);
 
   const handleChangeC1 = (event) => {
@@ -134,8 +138,10 @@ const Dashboard = () => {
     );
     if (value == "") {
       setCat1(allData);
+      setAllData2(allData)
     } else {
       const filtered = allData.filter((f) => f.category == value);
+      setAllData2(filtered)
       setCat1(filtered);
     }
   };
@@ -152,9 +158,11 @@ const Dashboard = () => {
 
     if (value == "") {
       setCat2(cat1);
+      setAllData2(cat1)
     } else {
       const filtered = cat1.filter((f) => f.category == value);
       setCat2(filtered);
+      setAllData2(filtered)
     }
   };
 
@@ -171,9 +179,11 @@ const Dashboard = () => {
 
     if (value == "") {
       setCat3(cat2);
+      setAllData2(cat2)
     } else {
       const filtered = cat2.filter((f) => f.category == value);
       setCat3(filtered);
+      setAllData2(filtered)
     }
   };
 
@@ -194,7 +204,7 @@ const Dashboard = () => {
           <div className="p-8 mt-6">
             {/* filter section  */}
 
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 place-items-center gap-4 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center gap-4  mb-12 ">
               <FormControl sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-multiple-name-label">Category</InputLabel>
                 <Select
@@ -290,11 +300,11 @@ const Dashboard = () => {
                 </Select>
               </FormControl>
 
-              <div>
+              {/* <div>
                 <LoadingButton loading={false} variant="contained">
                   Search
                 </LoadingButton>
-              </div>
+              </div> */}
             </div>
 
             <Outlet></Outlet>
