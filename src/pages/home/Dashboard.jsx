@@ -31,7 +31,15 @@ const Dashboard = () => {
             </li>
             <li>
               <Link to="/category-1">Category 1</Link>
-              <Link to="/details">details</Link> 
+
+            </li>
+            <li>
+            <Link to="/details">details</Link>
+
+            </li>
+            <li>
+              <Link to="/upload">Upload Document</Link>
+
             </li>
           </ul>
         </div>
