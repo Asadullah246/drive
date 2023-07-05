@@ -1,5 +1,5 @@
 import { Rating } from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 import cardImg1 from "../assets/CardImage/download.jpg";
 import { useState } from "react";
 
@@ -31,10 +31,11 @@ const Card = () => {
                                 <p>If a dog chews shoes whose shoes does he choose?</p>
                                 <div className="card-actions justify-start">
                                     {/* <div className="badge badge-outline">Fashion</div> */}
-                                    <LoadingButton loading variant="outlined">
-                                        Submit
-                                    </LoadingButton>
-
+                                    <div>
+                                        <LoadingButton loading={false} variant="contained">
+                                            Submit
+                                        </LoadingButton>
+                                    </div>
                                     {/* <div className="badge badge-outline">Products</div> */}
                                 </div>
                             </div>
