@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import { useContext, useEffect, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { AppContext } from "../../app.context";
+import testImage from "../../assets/CardImage/download.jpg"
 
 const removeDuplicate = (arr) => {
   // const uniqueArray = [...new Set(arr)];
@@ -28,18 +29,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
 
 function getStyles(name, personName, theme) {
   return {
@@ -60,7 +49,7 @@ const productData = [
     uploader: "miras",
     description: "this is a test product",
     review: [],
-    image: "./assets/CardImage",
+    image: testImage, 
     "learning-subject": [],
     "total-view": 10,
   },
@@ -74,7 +63,7 @@ const productData = [
     uploader: "asad",
     description: "this is a test product",
     review: [],
-    image: "./assets/CardImage",
+    image: testImage,
     "learning-subject": [],
     "total-view": 10,
   },
@@ -88,7 +77,7 @@ const productData = [
     uploader: "asad",
     description: "this is a test product",
     review: [],
-    image: "./assets/CardImage",
+    image: testImage,
     "learning-subject": [],
     "total-view": 10,
   },
@@ -102,7 +91,7 @@ const productData = [
     uploader: "asad",
     description: "this is a test product",
     review: [],
-    image: "./assets/CardImage",
+    image: testImage,
     "learning-subject": [],
     "total-view": 10,
   },
@@ -123,7 +112,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setAllData(productData);
-    setAllData2(productData) 
+    setAllData2(productData)
   }, []);
 
   const handleChangeC1 = (event) => {
