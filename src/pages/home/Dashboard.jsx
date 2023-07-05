@@ -38,10 +38,10 @@ const Dashboard = () => {
 
             </li>
             <li>
-              <Link to="/upload">Upload Document</Link>
+              <Link to="/upload">Upload Document</Link> 
             </li>
             <li>
-              <Link to="/mydoc">Upload Document</Link>
+              <Link to="/mydoc">My Documents</Link>
             </li>
           </ul>
         </div>
