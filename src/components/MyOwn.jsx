@@ -1,10 +1,11 @@
-// import { Rating } from "@mui/material";
-// import GroupIcon from '@mui/icons-material/Group';
+import { Rating } from "@mui/material";
+import GroupIcon from '@mui/icons-material/Group';
 import image from '../assets/CardImage/shop2.jpg'
+import { useState } from "react";
 // import { useState } from "react";
 
 const MyOwn = () => {
-    // const [value, setValue] = useState(2);
+    const [value, setValue] = useState(2);
     return (
         <div>
             <div className="overflow-x-auto">
@@ -32,14 +33,14 @@ const MyOwn = () => {
                                 </div>
                             </td>
                             <td>
-                            {/* <Rating name="read-only" value={value} readOnly
+                            <Rating name="read-only" value={value} readOnly
                                 // onChange={(event, newValue) => {
                                 //     setValue(newValue);
                                 // }}
-                                /> */}
+                                />
                             </td>
                             <td>
-                                {/* <GroupIcon/> */}
+                                <GroupIcon/>
                             </td>
                             <th>
                                 <button className="btn btn-ghost btn-xs">details</button>
