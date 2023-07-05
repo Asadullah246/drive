@@ -31,6 +31,7 @@ const Dashboard = () => {
             </li>
             <li>
               <Link to="/category-1">Category 1</Link>
+              <Link to="/details">details</Link> 
             </li>
           </ul>
         </div>
