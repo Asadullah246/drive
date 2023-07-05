@@ -1,6 +1,10 @@
+// import { Rating } from "@mui/material";
+// import GroupIcon from '@mui/icons-material/Group';
 import image from '../assets/CardImage/shop2.jpg'
+// import { useState } from "react";
 
 const MyOwn = () => {
+    // const [value, setValue] = useState(2);
     return (
         <div>
             <div className="overflow-x-auto">
@@ -22,20 +26,21 @@ const MyOwn = () => {
                                             <div>
                                                 <h3>Best seller: </h3>
                                             </div>
-                                            <div className="text-sm opacity-50">
-                                                <h3>Total Hours: 10</h3>
-                                                <h3>Update: 12/2023</h3>
-                                            </div>
+                                            <div className="text-sm opacity-50">Total Hours: 10</div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                Zemlak, Daniel and Leannon
-                                <br />
-                                <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                            {/* <Rating name="read-only" value={value} readOnly
+                                // onChange={(event, newValue) => {
+                                //     setValue(newValue);
+                                // }}
+                                /> */}
                             </td>
-                            <td>Purple</td>
+                            <td>
+                                {/* <GroupIcon/> */}
+                            </td>
                             <th>
                                 <button className="btn btn-ghost btn-xs">details</button>
                             </th>
