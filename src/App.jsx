@@ -18,8 +18,9 @@ function App() {
 
     <Route path="/" element={<Dashboard></Dashboard>}>
           <Route index element={<Home></Home>}></Route>
+          <Route path="/:id" element={<ProductDetails></ProductDetails>}></Route>
           <Route path="/category-1" element={<Category1></Category1>}></Route>
-          <Route path="/details" element={<ProductDetails></ProductDetails>}></Route>
+
           <Route path="/upload" element={<UploadProduct></UploadProduct>}></Route>
           <Route path="/mydoc" element={<MyDoc></MyDoc>}></Route>
 
