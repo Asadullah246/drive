@@ -33,7 +33,7 @@ const Card = () => {
                                     {/* <div className="badge badge-outline">Fashion</div> */}
                                     <div>
                                         <LoadingButton loading={false} variant="contained">
-                                            Submit
+                                            See Details
                                         </LoadingButton>
                                     </div>
                                     {/* <div className="badge badge-outline">Products</div> */}
