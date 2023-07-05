@@ -1,5 +1,6 @@
 import { Rating } from "@mui/material";
 import GroupIcon from '@mui/icons-material/Group';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import image from '../assets/CardImage/shop2.jpg'
 import { useState } from "react";
 // import { useState } from "react";
@@ -43,7 +44,7 @@ const MyOwn = () => {
                                 <GroupIcon/>
                             </td>
                             <th>
-                                <button className="btn btn-ghost btn-xs">details</button>
+                                <FavoriteBorderIcon/>
                             </th>
                         </tr>
                     </tbody>
