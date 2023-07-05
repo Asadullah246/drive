@@ -39,7 +39,9 @@ const Dashboard = () => {
             </li>
             <li>
               <Link to="/upload">Upload Document</Link>
-
+            </li>
+            <li>
+              <Link to="/mydoc">Upload Document</Link>
             </li>
           </ul>
         </div>

@@ -7,6 +7,7 @@ import Category1 from './pages/home/Category1'
 import ProductDetails from './pages/home/ProductDetails'
 import UploadProduct from './pages/home/UploadProduct'
 import "./styles/style.css"
+import MyDoc from './pages/home/MyDoc'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/category-1" element={<Category1></Category1>}></Route>
           <Route path="/details" element={<ProductDetails></ProductDetails>}></Route>
           <Route path="/upload" element={<UploadProduct></UploadProduct>}></Route>
+          <Route path="/mydoc" element={<MyDoc></MyDoc>}></Route>
 
         </Route>
 
