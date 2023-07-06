@@ -5,6 +5,7 @@ import { Button, Rating } from "@mui/material";
 import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import testImage from "../../assets/CardImage/download.jpg";
+import Reviews from '../../components/Reviews';
 
 const data =
 {
@@ -80,14 +81,29 @@ const ProductDetails = () => {
                 </div>
             </div>
             <div className='bg-gray-100 mt-8 p-0'>
-                <div className='max-w-6xl mx-auto'>
-                    <div className='pt-8'>
-                        <Button variant="contained" size="small">
+                <div className='max-w-xl mx-auto pt-8'>
+                    <span className='me-2'>
+                        <Button variant="contained" color="success">
                             What You'll Learn
                         </Button>
-                        <p className='mt-6'>{data.description}</p>
+                    </span>
+                    <span className='me-2'>
+                        <Button variant="contained" color="success">
+                            Reviews
+                        </Button>
+                    </span>
+                </div>
+                <div className='max-w-6xl mx-auto'>
+                    <div className='pt-8'>
+                        <LearningDetails />
                     </div>
-
+                </div>
+            </div>
+            <div className='bg-gray-100 p-0'>
+                <div className='max-w-6xl mx-auto'>
+                    <div className='pt-8'>
+                        <Reviews/>
+                    </div>
                 </div>
             </div>
         </div>
