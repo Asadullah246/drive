@@ -31,7 +31,7 @@ const data =
 }
 
 const Reviews = () => {
-    const [value, setValue] = useState(3);
+    const [value, setValue] = useState(4);
     const [beforeRating, setbeForeRating] = useState(5);
     return (
         <div>

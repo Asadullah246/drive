@@ -101,7 +101,7 @@ const ProductDetails = () => {
             </div>
             <div className='bg-gray-100 p-0'>
                 <div className='max-w-6xl mx-auto'>
-                    <div className='pt-8'>
+                    <div className='pt-8 pb-10'>
                         <Reviews/>
                     </div>
                 </div>

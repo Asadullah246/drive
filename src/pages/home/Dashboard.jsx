@@ -49,6 +49,9 @@ const Dashboard = () => {
             <li>
               <Link to="/mydoc">My Documents</Link>
             </li>
+            <li>
+              <Link to="/allfiles">All Files</Link>
+            </li>
           </ul>
         </div>
       </div>

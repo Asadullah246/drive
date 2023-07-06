@@ -8,6 +8,7 @@ import ProductDetails from './pages/home/ProductDetails'
 import UploadProduct from './pages/home/UploadProduct'
 import "./styles/style.css"
 import MyDoc from './pages/home/MyDoc'
+import AllProducts from './pages/home/AllProducts'
 
 function App() {
 
@@ -23,9 +24,9 @@ function App() {
 
           <Route path="/upload" element={<UploadProduct></UploadProduct>}></Route>
           <Route path="/mydoc" element={<MyDoc></MyDoc>}></Route>
+          <Route path="/allfiles" element={<AllProducts/>}></Route>
 
         </Route>
-
     </Routes>
 
     </>
