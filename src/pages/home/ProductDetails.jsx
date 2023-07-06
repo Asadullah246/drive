@@ -81,7 +81,7 @@ const ProductDetails = () => {
                 </div>
             </div>
             <div className='bg-gray-100 mt-8 p-0'>
-                <div className='max-w-xl mx-auto pt-8'>
+                <div className='max-w-xl mx-auto justify-center flex pt-8'>
                     <span className='me-2'>
                         <Button variant="contained" color="success">
                             What You'll Learn

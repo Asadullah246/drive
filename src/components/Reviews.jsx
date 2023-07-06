@@ -25,7 +25,12 @@ const Reviews = () => {
 
     return (
         <div>
-            <h2>This is reviews page</h2>
+            <div className=" mt-4 border-2 border-black-700 p-4">
+                <div className="flex justify-around">
+                    <h2 className="text-4xl font-semibold">Reviews</h2>
+                </div>
+                
+            </div>
         </div>
     );
 };
