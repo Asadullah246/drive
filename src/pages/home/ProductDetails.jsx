@@ -49,8 +49,17 @@ const ProductDetails = () => {
                             <h3 className='bg-slate-200 rounded-full px-2 mx-1 mt-2'>Sub Category: <span className='text-black font-semibold'>{data.sub_category}</span></h3>
                         </div>
                         <div className='mt-4'>
-                            <h2 className='text-xl'>Key Features</h2>
-                            <p>Model: </p>
+                            <h2 className='text-xl font-semibold'>Payment options</h2>
+                            <div className='flex border-2 border-orange-300 p-2 mt-4 items-center'>
+                                <div>
+                                    <input className='bg-gray-500 p-4' type="checkbox" name="payment" id="" />
+                                </div>
+                                <div className='ms-4'>
+                                    <p className='font-bold'>{data.price}৳</p>
+                                    <p>Cash Discount Price</p>
+                                    <p>Online / Cash Payment</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
