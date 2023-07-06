@@ -1,4 +1,4 @@
-import {  Rating } from "@mui/material";
+import {  Button, Rating } from "@mui/material";
 import GroupIcon from '@mui/icons-material/Group';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import image from '../../assets/CardImage/download.jpg'
@@ -40,6 +40,7 @@ const data =
 // modal inside the function 
 {/* modal */ }
 {/* Open the modal using ID.showModal() method */ }
+// onClick={() => window.my_modal_1.showModal()}
 {/* <button className="btn" onClick={() => window.my_modal_1.showModal()}>open modal</button> */ }
 // <dialog id="my_modal_1" className="modal">
 //     <form method="dialog" className="modal-box ">
@@ -89,8 +90,11 @@ const AllProducts = () => {
             <dialog id="my_modal_1" className="modal">
                 <form method="dialog" className="modal-box ">
                     <h3 className="font-bold text-lg mb-4">Item Name: {data.name}</h3>
-                    <img src={data.image} alt="" />
-                    <h2 className="font-semibold">Click For Decline:  <button><CancelIcon className="text-blue-600 me-4" /></button></h2>
+                    <img className="mb-4" src={data.image} alt="" />
+                    <input type="file" name="file" id="" />
+                    <br />
+                   <input className="btn btn-outline btn-success mt-2" type="submit" value="Submit" />
+                    {/* <h2 className="font-semibold">Click For Decline:  <button><CancelIcon className="text-blue-600 me-4" /></button></h2> */}
                     <div className="modal-action">
                         {/* if there is a button in form, it will close the modal */}
                         <button className="btn">Close</button>
