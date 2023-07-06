@@ -1,7 +1,7 @@
 // import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import LearningDetails from '../../components/LearningDetails';
 import image from "../../assets/CardImage/download.jpg"
-import { Rating } from "@mui/material";
+import { Button, Rating } from "@mui/material";
 import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import testImage from "../../assets/CardImage/download.jpg";
@@ -14,9 +14,9 @@ const data =
     sub_category: "sub cat-10",
     sub_sub_category: "sub sub cat-1",
     price: 300,
-    uploader: "miras",
+    uploader: "Miras",
     description: "this is a test product",
-    review: [],
+    review: [], // atar bodol nise rating disi
     image: testImage,
     learning_subject: [],
     total_view: 10,
@@ -24,6 +24,7 @@ const data =
     // ami add korlam 
     regular_price: 500,
     status: 'In Stock',
+    rating: 4,
 }
 
 
@@ -32,23 +33,37 @@ const ProductDetails = () => {
     const [value, setValue] = useState(2);
 
     return (
-        <div className='max-w-75vh'>
+        <div>
             {/* <LearningDetails /> */}
-            <div>
-                <div className='flex'>
+            <div className='max-w-6xl mx-auto'>
+                <div className='flex '>
                     <div>
                         <img className='w-80 me-8' src={data.image} alt="product image" />
                     </div>
                     <div className='ms-3'>
                         <h2 className='text-4xl '>{data.name}</h2>
                         <div className='lg:flex mt-4'>
-                            <h3 className='bg-slate-200 rounded-full px-2 mx-1 mt-2'>Price: <span className='text-black font-semibold'>{data.price} ৳</span></h3>
-                            <h3 className='bg-slate-200 rounded-full px-2 mx-1 mt-2'>Uploader: <span className='text-black font-semibold'>{data.uploader} ৳</span></h3>
-                            <h3 className='bg-slate-200 rounded-full px-2 mx-1 mt-2'>Status: <span className='text-black font-semibold'>{data.status}</span></h3>
-                            <h3 className='bg-slate-200 rounded-full px-2 mx-1 mt-2'>Category: <span className='text-black font-semibold'>{data.category}</span></h3>
-                            <h3 className='bg-slate-200 rounded-full px-2 mx-1 mt-2'>Sub Category: <span className='text-black font-semibold'>{data.sub_category}</span></h3>
+                            <h3 className='bg-slate-200 rounded-full px-2 me-2 mt-2'>Price: <span className='text-black font-semibold'>{data.price} ৳</span></h3>
+                            <h3 className='bg-slate-200 rounded-full px-2 me-2 mt-2'>Uploader: <span className='text-black font-semibold'>{data.uploader} ৳</span></h3>
+                            <h3 className='bg-slate-200 rounded-full px-2 me-2 mt-2'>Status: <span className='text-black font-semibold'>{data.status}</span></h3>
+                            <h3 className='bg-slate-200 rounded-full px-2 me-2 mt-2'>Category: <span className='text-black font-semibold'>{data.category}</span></h3>
+                            <h3 className='bg-slate-200 rounded-full px-2 me-2 mt-2'>Sub Category: <span className='text-black font-semibold'>{data.sub_category}</span></h3>
                         </div>
                         <div className='mt-4'>
+                            <h2 className='text-xl font-semibold'>Details:</h2>
+
+                            <h3>Uploader: <span className='font-semibold'>{data.uploader}</span></h3>
+                            <div className='flex'>
+                                <h2>Rating:</h2>
+                                <Rating name="read-only" value={data.rating} readOnly
+                                // onChange={(event, newValue) => {
+                                //     setValue(newValue);
+                                // }}
+                                />
+                            </div>
+                            <h2>Total Views: <span className='font-semibold'>{data.total_view}</span></h2>
+                        </div>
+                        <div className='mt-6'>
                             <h2 className='text-xl font-semibold'>Payment options</h2>
                             <div className='flex border-2 border-orange-300 p-2 mt-4 items-center'>
                                 <div>
@@ -62,6 +77,17 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className='bg-gray-100 mt-8 p-0'>
+                <div className='max-w-6xl mx-auto'>
+                    <div className='pt-8'>
+                        <Button variant="contained" size="small">
+                            What You'll Learn
+                        </Button>
+                        <p className='mt-6'>{data.description}</p>
+                    </div>
+
                 </div>
             </div>
         </div>
