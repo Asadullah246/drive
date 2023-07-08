@@ -3,10 +3,36 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 
 const UploadProduct = () => {
-    const upload=(e)=>{
-        e.preventDefault()
-        console.log(e.target.category.value);
+  const upload = (e) => {
+    e.preventDefault()
+    // console.log(e.target.category.value);
+
+    const form = e.target;
+    const name = form.name.value;
+    const category = form.category.value;
+    const sub_category = form.sub_category.value;
+    const sub_sub_category = form.sub_sub_category.value;
+    const price = form.price.value;
+    const uploader = form.uploader.value;
+    const description = form.description.value;
+    const learning_subject = form.learning_subject.value;
+    const image = form.image.value;
+    const document = form.document.value;
+    const documents = {
+      name,
+      category,
+      sub_category,
+      sub_sub_category,
+      price,
+      uploader,
+      description,
+      learning_subject,
+      image,
+      document
     }
+    console.log(documents);
+
+  }
   return (
     <div>
       <h4 className="text-3xl"> Upload Document</h4>
@@ -20,6 +46,7 @@ const UploadProduct = () => {
               type="text"
               name="name"
               id=""
+              placeholder="name"
               className="w-2/3 border-2 rounded-md p-1"
             />
           </div>
@@ -40,7 +67,7 @@ const UploadProduct = () => {
             </label>
             <input
               type="text"
-              name="name"
+              name="sub_category"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
@@ -51,7 +78,7 @@ const UploadProduct = () => {
             </label>
             <input
               type="text"
-              name="name"
+              name="sub_sub_category"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
@@ -62,7 +89,7 @@ const UploadProduct = () => {
             </label>
             <input
               type="number"
-              name="name"
+              name="price"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
@@ -73,7 +100,7 @@ const UploadProduct = () => {
             </label>
             <input
               type="text"
-              name="name"
+              name="uploader"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
@@ -84,7 +111,7 @@ const UploadProduct = () => {
             </label>
             <textarea
               type="text"
-              name="name"
+              name="description"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
@@ -97,7 +124,7 @@ const UploadProduct = () => {
             <div className="w-2/3">
               <textarea
                 type="text"
-                name="name"
+                name="learning_subject"
                 id=""
                 className="w-full border-2 rounded-md p-1"
               />{" "}
@@ -114,7 +141,7 @@ const UploadProduct = () => {
             </label>
             <input
               type="file"
-              name="name"
+              name="image"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
@@ -124,18 +151,18 @@ const UploadProduct = () => {
               Document :{" "}
             </label>
             <input
-              type="file"
-              name="name"
+              type="text"
+              name="document"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
           </div>
 
-        <div>
-        <LoadingButton loading={false} variant="contained" type="submit">
-            Submit
-          </LoadingButton>
-        </div>
+          <div>
+            <LoadingButton loading={false} variant="contained" type="submit">
+              Submit
+            </LoadingButton>
+          </div>
         </form>
       </div>
     </div>
