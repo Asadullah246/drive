@@ -111,10 +111,6 @@ const productData = [
 ];
 
 
-
-
-
-
 const Home = () => {
 
   const theme = useTheme();
@@ -191,7 +187,7 @@ const Home = () => {
       setCat3(cat2);
       setAllData2(cat2);
     } else {
-      const filtered = cat2.filter((f) => f.sub_sub_category == value); 
+      const filtered = cat2.filter((f) => f.sub_sub_category == value);
       setCat3(filtered);
       console.log("fil3", filtered);
       setAllData2(filtered);

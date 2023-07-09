@@ -1,5 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import Avatar from '@mui/material/Avatar';
+import { deepOrange, deepPurple } from "@mui/material/colors";
 
 const Dashboard = () => {
 
@@ -10,6 +12,13 @@ const Dashboard = () => {
         <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden ml-2">
           <MenuIcon style={{ color: "white" }} />
         </label>
+       <div className="flex justify-start items-start gap-2 ml-4 ">
+       <Avatar sx={{bgcolor: "#F000B8"}}>MD</Avatar>
+       <div>
+        <h6 className="text-white font-bold mb-0 ">Someone</h6>
+        <p className="text-white ">someone@gmail.com</p>
+       </div>
+       </div>
       </div>
 
       <div className="drawer lg:drawer-open">
@@ -17,7 +26,7 @@ const Dashboard = () => {
         <div className="drawer-content flex flex-col  ">
           <div className=" h-[50px] md:h-[80px] w-full "></div>
 
-          <div className="p-8 mt-6">
+          <div className="p-8 mt-6     ">
             {/* filter section  */}
 
 
@@ -37,12 +46,12 @@ const Dashboard = () => {
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/category-1">Category 1</Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link to="/details">details</Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/upload">Upload Document</Link>
             </li>

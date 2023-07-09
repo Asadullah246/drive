@@ -27,11 +27,11 @@ const Card = () => {
                                     className="w-full "
                                 />
                             </figure>
-                            <div className="card-body">
-                                <h2 className="card-title">
+                            <div className="card-body px-3 ">
+                                <h4 className="card-title">
                                     {a.name}
                                     <div className="badge badge-secondary">NEW</div>
-                                </h2>
+                                </h4>
                                 <Rating name="read-only" value={value} readOnly
                                 // onChange={(event, newValue) => {
                                 //     setValue(newValue);
