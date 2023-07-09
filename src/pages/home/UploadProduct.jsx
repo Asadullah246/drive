@@ -91,6 +91,7 @@ const UploadProduct = () => {
               type="text"
               name="doc_name"
               id=""
+              placeholder="name"
               className="w-2/3 border-2 rounded-md p-1"
             />
           </div>
@@ -133,6 +134,7 @@ const UploadProduct = () => {
             </label>
             <input
               type="number"
+              name="price"
               name="price"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
@@ -205,11 +207,11 @@ const UploadProduct = () => {
             />
           </div>
 
-        <div>
-        <LoadingButton loading={false} variant="contained" type="submit">
-            Submit
-          </LoadingButton>
-        </div>
+          <div>
+            <LoadingButton loading={false} variant="contained" type="submit">
+              Submit
+            </LoadingButton>
+          </div>
         </form>
       </div>
     </div>
