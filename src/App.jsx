@@ -11,6 +11,8 @@ import AllProducts from "./pages/home/AllProducts";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/home/Login";
+import RequireAuth from "./components/RequireAuth";
+import AllMember from "./pages/home/AllMember";
 
 function App() {
   return (
@@ -30,23 +32,23 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<Home></Home>}></Route>
-        <Route path="login" element={<Login></Login>}></Route>  
+        <Route path="/" element={<RequireAuth><Home></Home></RequireAuth>}></Route>
+        <Route path="login" element={<Login></Login>}></Route>
 
-        <Route path="/" element={<Dashboard></Dashboard>}>
-          <Route index element={<Home></Home>}></Route>
+        <Route path="/" element={<RequireAuth><Dashboard></Dashboard></RequireAuth>}>
+          <Route index element={<RequireAuth><Home></Home></RequireAuth>}></Route>
           <Route
             path="/:id"
-            element={<ProductDetails></ProductDetails>}
+            element={<RequireAuth><ProductDetails></ProductDetails></RequireAuth>}
           ></Route>
-          <Route path="/category-1" element={<Category1></Category1>}></Route>
 
           <Route
             path="/upload"
-            element={<UploadProduct></UploadProduct>}
+            element={<RequireAuth><UploadProduct></UploadProduct></RequireAuth>}
           ></Route>
-          <Route path="/mydoc" element={<MyDoc></MyDoc>}></Route>
-          <Route path="/allfiles" element={<AllProducts />}></Route>
+          <Route path="/mydoc" element={<RequireAuth><MyDoc></MyDoc></RequireAuth>}></Route>
+          <Route path="/alluser" element={<RequireAuth><AllMember></AllMember></RequireAuth>}></Route>
+          <Route path="/allfiles" element={<RequireAuth><AllProducts /></RequireAuth>}></Route>
         </Route>
       </Routes>
     </>

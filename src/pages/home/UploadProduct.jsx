@@ -11,12 +11,13 @@ const UploadProduct = () => {
   const [thumb, setThumb]=useState(null)
   const [allFiles, setAllFiles]=useState([])
   const [user, setUser]=useState()
+  const [localRef, setLocalRef] = useState(false);
   useEffect(() => {
     const getUser = JSON.parse(localStorage.getItem("driveUser"));
     if (getUser) {
       setUser(getUser)
     }
-  }, []);
+  }, [localRef]);
 
   useEffect(() => {
     axios
@@ -79,6 +80,24 @@ const UploadProduct = () => {
         .then(function (response) {
           // setRefreshP(!refreshP);
           ToastSuccess("Successfully updated");
+
+
+          const updateUser = {
+            point: Number(user?.point)+3,
+          };
+          axios
+            .patch(`${base}/member/${user._id}`, updateUser)
+            .then(function (response) {
+              // ToastSuccess("profile updated"); 
+              reInstallUser();
+
+              // console.log(response);
+            })
+            .catch(function (error) {
+              ToastError(error?.message);
+              console.log(error);
+            });
+
           console.log(response.data);
         })
         .catch(function (error) {
@@ -86,6 +105,20 @@ const UploadProduct = () => {
           ToastError(error?.message);
         });
     }
+
+    const reInstallUser = () => {
+      axios
+        .get(`${base}/member/${user.email}`)
+        .then(function (response) {
+          localStorage.setItem("driveUser", JSON.stringify(response.data));
+          setLocalRef(!localRef);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    console.log("user", user );
 
   return (
     <div>
@@ -100,7 +133,7 @@ const UploadProduct = () => {
               type="text"
               name="doc_name"
               id=""
-              placeholder="name"
+
               className="w-2/3 border-2 rounded-md p-1"
             />
           </div>
@@ -209,7 +242,7 @@ const UploadProduct = () => {
             <input
             onChange={handleFileChange}
               type="file"
-              // multiple 
+              // multiple
               name="files"
               id=""
               className="w-2/3 border-2 rounded-md p-1"

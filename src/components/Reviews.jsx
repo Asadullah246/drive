@@ -1,11 +1,15 @@
 import { Rating } from "@mui/material";
 import testImage from "../assets/CardImage/download.jpg";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import axios from "axios";
+import base from "./Database";
+import { AppContext } from "../app.context";
+import ToastSuccess, { ToastError } from "./Toast";
 
 const style = {
   position: "absolute",
@@ -19,39 +23,72 @@ const style = {
   p: 4,
 };
 
-const data = {
-  id: 1,
-  name: "product 1",
-  category: "cat 1",
-  sub_category: "sub cat-10",
-  sub_sub_category: "sub sub cat-1",
-  price: 300,
-  uploader: "Miras",
-  description: "this is a test product",
-  // review: [], // nise korsi nite ta delete kore diyo
-  image: testImage,
-  learning_subject: [],
-  total_view: 10,
-
-  // ami add korlam
-  regular_price: 500,
-  status: "In Stock",
-  rating: 4,
-
-  // reviews
-  descriptions:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi commodi hic nam placeat voluptates cupiditate nostrum eius rem rerum.",
-  author: "Jakir",
-  time: "on Feb 2023",
-};
-
 const Reviews = ({ p }) => {
   const [value, setValue] = useState(4);
   const [beforeRating, setbeForeRating] = useState(5);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [value2, setValue2] = useState(2);
+  const [value2, setValue2] = useState(5);
+  const [user, setUser]=useState()
+  const { sRefresh, setSRefresh} = useContext(AppContext);
+  const [allRating, setAllRating]=useState([])
+  const [av, setAv]=useState(5)
+
+  useEffect(() => {
+    const getUser = JSON.parse(localStorage.getItem("driveUser"));
+    if (getUser) {
+      setUser(getUser)
+    }
+  }, []);
+
+  useEffect(() => {
+    setAllRating(p?.reviews)
+     }, [p]);
+  useEffect(() => {
+    if(allRating){
+     getAv(allRating)
+    }
+     }, [allRating]);
+
+
+  const addRAting=(e)=>{
+e.preventDefault();
+const t=e.target
+const body={
+  name:t.name.value,
+  email:t.email.value,
+  desc:t.desc.value,
+  rating:value2
+}
+
+axios
+.put(`${base}/files/rating/${p._id}`, body)
+.then(function (response) {
+  setSRefresh(!sRefresh);
+  ToastSuccess("Successfully review added");
+
+  // console.log(response);
+})
+.catch(function (error) {
+  ToastError(error?.message);
+  console.log(error);
+});
+  }
+
+  const getAv=(r)=>{
+    let all=0
+    if (!(Array.isArray(r))) {
+      setAv(0)
+      return ;
+    }
+    r.map(a=>{
+      return all += Number(a.rating)
+    })
+    setAv(all /r.length)
+
+  }
+  console.log("av", av);
 
   return (
     <div>
@@ -71,7 +108,7 @@ const Reviews = ({ p }) => {
           >
             Give review
           </Typography>
-          <form action="">
+          <form action="" onSubmit={addRAting}>
             <div className="flex justify-between items-center gap-3 mb-6 ">
               <label className="w-1/3" htmlFor="">
                 Name
@@ -81,6 +118,7 @@ const Reviews = ({ p }) => {
                 type="text"
                 name="name"
                 id=""
+                defaultValue={user?.name}
               />
             </div>
             <div className="flex justify-between items-center gap-3 mb-6 ">
@@ -90,8 +128,9 @@ const Reviews = ({ p }) => {
               <input
                 className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2"
                 type="email"
-                name="name"
+                name="email"
                 id=""
+                defaultValue={user?.email}
               />
             </div>
             <div className="flex justify-between items-center gap-3 mb-6 ">
@@ -99,9 +138,10 @@ const Reviews = ({ p }) => {
                 Review
               </label>
               <textarea
+              required
                 className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2"
                 type="text"
-                name="name"
+                name="desc"
                 id=""
               />
             </div>
@@ -117,6 +157,7 @@ const Reviews = ({ p }) => {
                 }}
               />
             </div>
+            <button type="submit" className="w-full rounded-md bg-[#1976D2] text-white py-2">Submit</button>
           </form>
         </Box>
       </Modal>
@@ -126,7 +167,7 @@ const Reviews = ({ p }) => {
             Reviews:{" "}
             <Rating
               name="read-only"
-              value={4}
+              value={Math.ceil(av)}
               style={{
                 fontSize: "1em ",
                 color: "#1976D2 ",
@@ -134,7 +175,7 @@ const Reviews = ({ p }) => {
               }}
               readOnly
             />{" "}
-            ({data.rating})
+            ({p?.reviews?.length || 0})
           </h2>
           <p>
             Get specific details about this product from customers who own it.
@@ -163,75 +204,35 @@ const Reviews = ({ p }) => {
               Write a Review
             </Button>
           </div>
-          <div className="pb-6">
-            <hr className="border-yellow-400 h-4 " />
-            <div className="flex gap-4 items-start ">
-              <div>
-                <Avatar sx={{ bgcolor: "#1976D2" }}>OP</Avatar>
-              </div>
-              <div>
-                <h6 className="font-bold">Miras</h6>
-                <Rating
-                  name="read-only"
-                  value={beforeRating}
-                  style={{ fontSize: "1.1em ", color: "#1976D2 " }}
-                  readOnly
-                />
-                <p>{data.descriptions}</p>
-                <div className="flex">
-                  <p className="text-gray-500">{data.time}</p>
+
+          {
+            p?.reviews?.map((re,index)=>{
+              return(
+                <div className="pb-6" key={index}>
+                <hr className="border-yellow-400 h-4 " />
+                <div className="flex gap-4 items-start ">
+                  <div>
+                    <Avatar sx={{ bgcolor: "#1976D2" }}>{re.name.substring(0, 2)}</Avatar>
+                  </div>
+                  <div>
+                    <h6 className="font-bold">{re?.name}</h6>
+                    <Rating
+                      name="read-only"
+                      value={re.rating}
+                      style={{ fontSize: "1.1em ", color: "#1976D2 " }}
+                      readOnly
+                    />
+                    <p>{re?.desc}</p>
+                    <div className="flex">
+                      {/* <p className="text-gray-500">{data.time}</p> */}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="pb-6">
-            <hr className="border-yellow-400 h-4" />
-            <div className="flex gap-4 items-start ">
-              <div>
-                <Avatar sx={{ bgcolor: "#1976D2" }}>Rk</Avatar>
-              </div>
-              <div>
-                <h6 className="font-bold">Rayhan</h6>
-                <Rating
-                  name="read-only"
-                  value={beforeRating}
-                  style={{ fontSize: "1.1em ", color: "#1976D2 " }}
-                  readOnly
-                />
-                <p>{data.descriptions}</p>
-                <div className="flex">
-                  <p className="text-gray-500">{data.time}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="pb-6">
-            <hr className="border-yellow-400 h-4" />
-            <div className="flex gap-4 items-start ">
-              <div>
-                <Avatar sx={{ bgcolor: "#1976D2" }}>SK</Avatar>
-              </div>
-              <div>
-                <h6 className="font-bold">Sagor</h6>
-                <Rating
-                  name="read-only"
-                  value={beforeRating}
-                  style={{ fontSize: "1.1em ", color: "#1976D2 " }}
-                  readOnly
-                />
-                <p>{data.descriptions}</p>
-                <div className="flex">
-                  {/* <p className="text-gray-500 me-2">By</p>
-                  <p>
-                    <span className="font-semibold text-violet-700 me-2">
-                      {data.author}
-                    </span>
-                  </p> */}
-                  <p className="text-gray-500">{data.time}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+              )
+            })
+          }
+
         </div>
       </div>
     </div>

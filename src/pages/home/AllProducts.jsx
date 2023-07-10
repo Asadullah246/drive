@@ -1,8 +1,4 @@
-import { Button, Rating } from "@mui/material";
-import GroupIcon from "@mui/icons-material/Group";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import image from "../../assets/CardImage/download.jpg";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+
 import testImage from "../../assets/CardImage/download.jpg";
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -28,17 +24,7 @@ import ToastSuccess, { ToastError } from "../../components/Toast";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
 
 // data for modal
 const data = {
@@ -388,13 +374,13 @@ const AllProducts = () => {
               <Tab label="Pending" value="1" />
               <Tab label="Approved" value="2" />
               <Tab label="Cancelled" value="3" />
-              <Tab label="others" value="4" />
+              {/* <Tab label="others" value="4" /> */}
             </TabList>
           </Box>
           <TabPanel value="1">{tableData(pending)}</TabPanel>
           <TabPanel value="2">{approvedTable(approved)}</TabPanel>
           <TabPanel value="3">{approvedTable(cancelled)}</TabPanel>
-          <TabPanel value="4">{others(allFiles)}</TabPanel>
+          {/* <TabPanel value="4">{others(allFiles)}</TabPanel> */}
         </TabContext>
       </Box>
     </div>

@@ -65,12 +65,12 @@ const Home = () => {
   const [cat1, setCat1] = useState([]);
   const [cat2, setCat2] = useState([]);
   const [setCat3, setCat3setCat3] = useState([]);
-  const { allData2, setAllData2, allFiles, setAllFiles } = useContext(AppContext);
+  const { allData2, setAllData2, allFiles, setAllFiles, allFiles2, setAllFiles2 } = useContext(AppContext);
 
   useEffect(() => {
-    setAllData(allFiles);
-    setAllData2(allFiles);
-  }, [allFiles]);
+    setAllData(allFiles2);
+    setAllData2(allFiles2);
+  }, [allFiles2]);
 
   const handleChangeC1 = (event) => {
     const {
@@ -150,7 +150,7 @@ const Home = () => {
     //   setCat3(cat2);
       setAllData2(allData);
     } else {
-      const filtered = allData.filter((f) => f.doc_name.includes(value)); 
+      const filtered = allData.filter((f) => f.doc_name.includes(value));
     //   setCat3(filtered);
       setAllData2(filtered);
     }

@@ -75,8 +75,9 @@ const Login = () => {
       const body = {
         name:t.name.value,
         email: t.email.value,
-        password: t.password.value, 
-        role: "user",
+        password: t.password.value,
+        role: "user", 
+        point:3
 
       };
       axios

@@ -1,7 +1,7 @@
 import { Rating } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import cardImg1 from "../assets/CardImage/download.jpg";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../app.context";
 import { useNavigate } from "react-router-dom";
 import base from "./Database";
@@ -10,6 +10,26 @@ const Card = () => {
     const [value, setValue] = useState(2);
     const { allData2, setAllData2 } = useContext(AppContext);
     const navigate=useNavigate()
+    const [allRating, setAllRating] = useState([]);
+    const [av, setAv] = useState(5);
+
+    useEffect(() => {
+        if (allRating) {
+          getAv(allRating);
+        }
+      }, [allRating]);
+
+      const getAv = (r) => {
+        let all = 0;
+        if (!Array.isArray(r)) {
+          setAv(0);
+          return;
+        }
+        r.map((a) => {
+          return (all += Number(a.rating));
+        });
+        setAv(all / r.length);
+      };
 
     const singleDetails=(id)=>{
         console.log("id", id);
@@ -33,7 +53,7 @@ const Card = () => {
                                     {a.doc_name}
                                     {/* <div className="badge badge-secondary">NEW</div> */}
                                 </h4>
-                                <Rating name="read-only" value={value} readOnly
+                                <Rating name="read-only" value={av} readOnly
                                 // onChange={(event, newValue) => {
                                 //     setValue(newValue);
                                 // }}
