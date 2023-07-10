@@ -1,4 +1,4 @@
-import {  Rating } from "@mui/material";
+import { Rating } from "@mui/material";
 import testImage from "../assets/CardImage/download.jpg";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
@@ -51,6 +51,7 @@ const Reviews = ({ p }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [value2, setValue2] = useState(2);
 
   return (
     <div>
@@ -62,34 +63,61 @@ const Reviews = ({ p }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography style={{textAlign:"center ", marginBottom:"20px "}} id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            style={{ textAlign: "center ", marginBottom: "20px " }}
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
             Give review
           </Typography>
           <form action="">
             <div className="flex justify-between items-center gap-3 mb-6 ">
-              <label className="w-1/3" htmlFor="">Name</label>
-              <input className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2" type="text" name="name" id="" />
+              <label className="w-1/3" htmlFor="">
+                Name
+              </label>
+              <input
+                className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2"
+                type="text"
+                name="name"
+                id=""
+              />
             </div>
             <div className="flex justify-between items-center gap-3 mb-6 ">
-              <label className="w-1/3" htmlFor="">Email</label>
-              <input className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2" type="email" name="name" id="" />
+              <label className="w-1/3" htmlFor="">
+                Email
+              </label>
+              <input
+                className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2"
+                type="email"
+                name="name"
+                id=""
+              />
             </div>
             <div className="flex justify-between items-center gap-3 mb-6 ">
-              <label className="w-1/3" htmlFor="">Review</label>
-              <textarea className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2" type="text" name="name" id="" />
+              <label className="w-1/3" htmlFor="">
+                Review
+              </label>
+              <textarea
+                className="w-[70%] border-2 border-gray-400   rounded-md py-1 px-2"
+                type="text"
+                name="name"
+                id=""
+              />
             </div>
             <div className="flex justify-between items-center gap-3 mb-6 ">
-              <label className="w-1/3" htmlFor="">Rating</label>
+              <label className="w-1/3" htmlFor="">
+                Rating
+              </label>
               <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      />
+                name="simple-controlled"
+                value={value2}
+                onChange={(event, newValue) => {
+                  setValue2(newValue);
+                }}
+              />
             </div>
           </form>
-
         </Box>
       </Modal>
       <div className=" mt-4 border-2 border-black-700  p-4">
@@ -131,7 +159,9 @@ const Reviews = ({ p }) => {
             />
           </div> */}
           <div className="mt-3 mb-8">
-            <Button onClick={handleOpen} variant="contained">Write a Review</Button>
+            <Button onClick={handleOpen} variant="contained">
+              Write a Review
+            </Button>
           </div>
           <div className="pb-6">
             <hr className="border-yellow-400 h-4 " />
