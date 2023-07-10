@@ -4,6 +4,7 @@ import cardImg1 from "../assets/CardImage/download.jpg";
 import { useContext, useState } from "react";
 import { AppContext } from "../app.context";
 import { useNavigate } from "react-router-dom";
+import base from "./Database";
 
 const Card = () => {
     const [value, setValue] = useState(2);
@@ -22,22 +23,22 @@ const Card = () => {
                         <div key={index} className="card  bg-base-100 shadow-xl">
                             <figure>
                                 <img
-                                    src={a.image}
-                                    alt="Shoes"
-                                    className="w-full "
+                                    src={`${base}/${a.thumb}`}
+                                    alt="doc"
+                                    className="w-full h-[250px]" 
                                 />
                             </figure>
                             <div className="card-body px-3 ">
                                 <h4 className="card-title">
-                                    {a.name}
-                                    <div className="badge badge-secondary">NEW</div>
+                                    {a.doc_name}
+                                    {/* <div className="badge badge-secondary">NEW</div> */}
                                 </h4>
                                 <Rating name="read-only" value={value} readOnly
                                 // onChange={(event, newValue) => {
                                 //     setValue(newValue);
                                 // }}
                                 />
-                                <p>{a.description}</p>
+                                <p>{a.desc.substring(0, 50)}</p>
                                 <div className="card-actions justify-start">
                                     {/* <div className="badge badge-outline">Fashion</div> */}
                                     <div>

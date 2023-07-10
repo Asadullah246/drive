@@ -10,6 +10,13 @@ const UploadProduct = () => {
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [thumb, setThumb]=useState(null)
   const [allFiles, setAllFiles]=useState([])
+  const [user, setUser]=useState()
+  useEffect(() => {
+    const getUser = JSON.parse(localStorage.getItem("driveUser"));
+    if (getUser) {
+      setUser(getUser)
+    }
+  }, []);
 
   useEffect(() => {
     axios
@@ -42,7 +49,6 @@ const UploadProduct = () => {
           sub_category:t.sub_category.value,
           sub_sub_category:t.sub_sub_category.value,
           price:t.price.value,
-          uploader_name:t.uploader_name.value,
           desc:t.desc.value,
           l_subject:t.l_subject.value,
           thumb:t.category.file,
@@ -54,15 +60,18 @@ const UploadProduct = () => {
         for (let i = 0; i < selectedFiles.length; i++) {
           formData.append('files', selectedFiles[i]);
         }
+        console.log("user", user );
         formData.append('thumb', thumb);
         formData.append('doc_name', body.doc_name);
         formData.append('category', body.category);
         formData.append('sub_category', body.sub_category);
         formData.append('sub_sub_category', body.sub_sub_category);
         formData.append('price', body.price);
-        formData.append('uploader_name', body.uploader_name);
         formData.append('desc', body.desc);
         formData.append('l_subject', body.l_subject);
+        formData.append('uploader_name', user.name);
+        formData.append('uploader_email',user.email);
+        formData.append('status',"pending");
 
 
         axios
@@ -134,13 +143,13 @@ const UploadProduct = () => {
             </label>
             <input
               type="number"
-              name="price"
+
               name="price"
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
           </div>
-          <div className="w-full flex justify-between items-center gap-4 mb-4">
+          {/* <div className="w-full flex justify-between items-center gap-4 mb-4">
             <label className="w-1/3" htmlFor="">
               Uploader :{" "}
             </label>
@@ -150,7 +159,7 @@ const UploadProduct = () => {
               id=""
               className="w-2/3 border-2 rounded-md p-1"
             />
-          </div>
+          </div> */}
           <div className="w-full flex justify-between items-center gap-4 mb-4">
             <label className="w-1/3" htmlFor="">
               Description :{" "}
@@ -200,7 +209,7 @@ const UploadProduct = () => {
             <input
             onChange={handleFileChange}
               type="file"
-              multiple
+              // multiple 
               name="files"
               id=""
               className="w-2/3 border-2 rounded-md p-1"

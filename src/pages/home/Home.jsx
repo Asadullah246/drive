@@ -51,64 +51,6 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-const productData = [
-  {
-    id: 1,
-    name: "product 1",
-    category: "cat 1",
-    sub_category: "sub cat-10",
-    sub_sub_category: "sub sub cat-1",
-    price: 300,
-    uploader: "miras",
-    description: "this is a test product",
-    review: [],
-    image: testImage,
-    learning_subject: [],
-    total_view: 10,
-  },
-  {
-    id: 2,
-    name: "product 2",
-    category: "cat 2",
-    sub_category: "sub cat-2",
-    sub_sub_category: "sub sub cat-2",
-    price: 700,
-    uploader: "asad",
-    description: "this is a test product",
-    review: [],
-    image: testImage,
-    learning_subject: [],
-    total_view: 10,
-  },
-  {
-    id: 2,
-    name: "product 3",
-    category: "cat 2",
-    sub_category: "sub cat-2",
-    sub_sub_category: "sub sub cat-2",
-    price: 700,
-    uploader: "asad",
-    description: "this is a test product",
-    review: [],
-    image: testImage,
-    learning_subject: [],
-    total_view: 10,
-  },
-  {
-    id: 2,
-    name: "product 4",
-    category: "cat 1",
-    sub_category: "sub cat-6",
-    sub_sub_category: "sub sub cat-5",
-    price: 700,
-    uploader: "asad",
-    description: "this is a test product",
-    review: [],
-    image: testImage,
-    learning_subject: [],
-    total_view: 10,
-  },
-];
 
 
 const Home = () => {
@@ -123,12 +65,12 @@ const Home = () => {
   const [cat1, setCat1] = useState([]);
   const [cat2, setCat2] = useState([]);
   const [setCat3, setCat3setCat3] = useState([]);
-  const { allData2, setAllData2 } = useContext(AppContext);
+  const { allData2, setAllData2, allFiles, setAllFiles } = useContext(AppContext);
 
   useEffect(() => {
-    setAllData(productData);
-    setAllData2(productData);
-  }, []);
+    setAllData(allFiles);
+    setAllData2(allFiles);
+  }, [allFiles]);
 
   const handleChangeC1 = (event) => {
     const {
@@ -208,7 +150,7 @@ const Home = () => {
     //   setCat3(cat2);
       setAllData2(allData);
     } else {
-      const filtered = allData.filter((f) => f.name.includes(value));
+      const filtered = allData.filter((f) => f.doc_name.includes(value)); 
     //   setCat3(filtered);
       setAllData2(filtered);
     }

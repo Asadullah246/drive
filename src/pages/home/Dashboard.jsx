@@ -2,8 +2,17 @@ import { Link, Outlet } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from "@mui/material/colors";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
+  const [user, setUser]=useState()
+  useEffect(() => {
+    const getUser = JSON.parse(localStorage.getItem("driveUser"));
+    if (getUser) {
+      setUser(getUser)
+    }
+  }, []);
+  console.log("user", user );
 
   return (
     <div>
@@ -13,10 +22,10 @@ const Dashboard = () => {
           <MenuIcon style={{ color: "white" }} />
         </label>
        <div className="flex justify-start items-start gap-2 ml-4 ">
-       <Avatar sx={{bgcolor: "#F000B8"}}>MD</Avatar>
+       <Avatar sx={{bgcolor: "#F000B8"}}>{user?user.name?.substring(0, 2).toUpperCase():"NO"}</Avatar> 
        <div>
-        <h6 className="text-white font-bold mb-0 ">Someone</h6>
-        <p className="text-white ">someone@gmail.com</p>
+        <h6 className="text-white font-bold mb-0 ">{user?.name}, {user?.role}</h6>
+        <p className="text-white ">{user?.email}</p>
        </div>
        </div>
       </div>

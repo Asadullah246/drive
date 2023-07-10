@@ -9,7 +9,8 @@ import "./styles/style.css";
 import MyDoc from "./pages/home/MyDoc";
 import AllProducts from "./pages/home/AllProducts";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
+import Login from "./pages/home/Login";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
+        <Route path="login" element={<Login></Login>}></Route>  
 
         <Route path="/" element={<Dashboard></Dashboard>}>
           <Route index element={<Home></Home>}></Route>

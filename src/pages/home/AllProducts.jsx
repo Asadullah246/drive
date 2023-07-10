@@ -1,162 +1,409 @@
-import {  Button, Rating } from "@mui/material";
-import GroupIcon from '@mui/icons-material/Group';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import image from '../../assets/CardImage/download.jpg'
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CancelIcon from '@mui/icons-material/Cancel';
-import testImage from '../../assets/CardImage/download.jpg'
-import { useState } from "react";
+import { Button, Rating } from "@mui/material";
+import GroupIcon from "@mui/icons-material/Group";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import image from "../../assets/CardImage/download.jpg";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import testImage from "../../assets/CardImage/download.jpg";
+import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-// import { useState } from "react";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { AppContext } from "../../app.context";
+import Avatar from "@mui/material/Avatar";
+import base from "../../components/Database";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import CancelIcon from "@mui/icons-material/Cancel";
+import axios from "axios";
+import ToastSuccess, { ToastError } from "../../components/Toast";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
-// data for modal 
-const data =
-{
-    id: 1,
-    name: "product 1",
-    category: "cat 1",
-    sub_category: "sub cat-10",
-    sub_sub_category: "sub sub cat-1",
-    price: 300,
-    uploader: "Miras",
-    description: "this is a test product",
-    // review: [], // nise korsi nite ta delete kore diyo 
-    image: testImage,
-    learning_subject: [],
-    total_view: 10,
-
-    // ami add korlam 
-    regular_price: 500,
-    status: 'In Stock',
-    rating: 4,
-
-    // reviews 
-    descriptions: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi commodi hic nam placeat voluptates cupiditate nostrum eius rem rerum.",
-    author: "Jakir",
-    time: "on Feb 2023"
-
-
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
 }
-// modal inside the function 
-{/* modal */ }
-{/* Open the modal using ID.showModal() method */ }
-// onClick={() => window.my_modal_1.showModal()}
-{/* <button className="btn" onClick={() => window.my_modal_1.showModal()}>open modal</button> */ }
-// <dialog id="my_modal_1" className="modal">
-//     <form method="dialog" className="modal-box ">
-//     <h3 className="font-bold text-lg mb-4">Item Name: {data.name}</h3>
-//         <img src={data.image} alt="" />
-//         <p className="mt-2">Category: {data.category}</p>
-//         <p>Sub-Category: <span className="font-semibold">{data.sub_category}</span></p>
-//         <p>Price: <span className="font-semibold">{data.price}</span></p>
-//         <p>Uploader: <span className="font-semibold">{data.uploader}</span></p>
-//         <p>Status: <span className="font-semibold">{data.status}</span></p>
-//         <h2 className="font-semibold">Click For Decline:  <button><CancelIcon className="text-blue-600 me-4" /></button></h2>
-//         <div className="modal-action">
-//             {/* if there is a button in form, it will close the modal */}
-//             <button className="btn">Close</button>
-//         </div>
-//     </form>
-// </dialog>
 
+const rows = [
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
+];
 
+// data for modal
+const data = {
+  id: 1,
+  name: "product 1",
+  category: "cat 1",
+  sub_category: "sub cat-10",
+  sub_sub_category: "sub sub cat-1",
+  price: 300,
+  uploader: "Miras",
+  description: "this is a test product",
+  // review: [], // nise korsi nite ta delete kore diyo
+  image: testImage,
+  learning_subject: [],
+  total_view: 10,
+
+  // ami add korlam
+  regular_price: 500,
+  status: "In Stock",
+  rating: 4,
+
+  // reviews
+  descriptions:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi commodi hic nam placeat voluptates cupiditate nostrum eius rem rerum.",
+  author: "Jakir",
+  time: "on Feb 2023",
+};
 
 const AllProducts = () => {
-    const [value, setValue] = useState(4);
-   const handleApproved =()=>{
+  const [value, setValue] = useState("1");
+  const { allFiles, setAllFiles, refresh, setRefresh } = useContext(AppContext);
+  const [pending, setPending] = useState([]);
+  const [approved, setApproved] = useState([]);
+  const [cancelled, setCancelled] = useState([]);
+
+  useEffect(() => {
+    const pend = allFiles?.filter((f) => f.status == "pending");
+    setPending(pend);
+  }, [allFiles]);
+  useEffect(() => {
+    const approve = allFiles?.filter((f) => f.status == "approved");
+    setApproved(approve);
+  }, [allFiles]);
+  useEffect(() => {
+    const approve = allFiles?.filter((f) => f.status == "cancelled");
+    setCancelled(approve);
+  }, [allFiles]);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const handleApproved = () => {
     Swal.fire({
-        title: 'Do You Want to Approve?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Approve it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Approved Successfully!',
-            'Your file has been Approved.',
-            'success'
-          )
-        }
+      title: "Do You Want to Approve?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Approve it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          "Approved Successfully!",
+          "Your file has been Approved.",
+          "success"
+        );
+      }
+    });
+  };
+
+  const approveDoc = (row) => {
+    const body = {
+      status: "approved",
+    };
+
+    axios
+      .patch(`${base}/files/${row._id}`, body)
+      .then(function (response) {
+        setRefresh(!refresh);
+        ToastSuccess("Successfully file cancelled");
+
+        // console.log(response);
       })
-   }
+      .catch(function (error) {
+        ToastError(error?.message);
+        console.log(error);
+      });
+  };
+  const cancelDoc = (row) => {
+    const body = {
+      status: "cancelled",
+    };
+
+    axios
+      .patch(`${base}/files/${row._id}`, body)
+      .then(function (response) {
+        setRefresh(!refresh);
+        ToastSuccess("Successfully file cancelled");
+
+        // console.log(response);
+      })
+      .catch(function (error) {
+        ToastError(error?.message);
+        console.log(error);
+      });
+  };
+  const deleteDoc = (row) => {
+    axios
+      .delete(`${base}/files/${row._id}`)
+      .then(function (response) {
+        setRefresh(!refresh);
+        ToastSuccess("Successfully file cancelled");
+
+        // console.log(response);
+      })
+      .catch(function (error) {
+        ToastError(error?.message);
+        console.log(error);
+      });
+  };
+  console.log("all", allFiles);
+
+  const downloadFile = (row) => {
+    const fileUrl = `${base}/${row.files[0]}`;
+
+    fetch(fileUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = row.files[0];
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+
+    // const fileUrl = 'https://example.com/path/to/file.pdf'; // Replace with your file URL
+    // const link = document.createElement('a');
+    // link.href = fileUrl;
+    // link.download = row.files[0]; // Specify the desired file name
+    // link.click();
+  };
+
+  const tableData = (d) => {
     return (
-        <div>
-            {/* modal */}
-            {/* Open the modal using ID.showModal() method */}
-            {/* <button className="btn" onClick={() => window.my_modal_1.showModal()}>open modal</button> */}
-            <dialog id="my_modal_1" className="modal">
-                <form method="dialog" className="modal-box ">
-                    <h3 className="font-bold text-lg mb-4">Item Name: {data.name}</h3>
-                    <img className="mb-4" src={data.image} alt="" />
-                    <input type="file" name="file" id="" />
-                    <br />
-                   <input className="btn btn-outline btn-success mt-2" type="submit" value="Submit" />
-                    {/* <h2 className="font-semibold">Click For Decline:  <button><CancelIcon className="text-blue-600 me-4" /></button></h2> */}
-                    <div className="modal-action">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn">Close</button>
+      <>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="right">Document</TableCell>
+                <TableCell align="right">Category</TableCell>
+                <TableCell align="right">Download</TableCell>
+                <TableCell align="right">Manage</TableCell>
+                {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {d?.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <div className="flex items-center gap-2">
+                      <Avatar
+                        alt="Travis Howard"
+                        src={`${base}/${row.thumb}`}
+                      />
+                      <p className="text-[1em]">{row.uploader_name} </p>
                     </div>
-                </form>
-            </dialog>
-
-
-            <div className="overflow-x-auto">
-                <table className="table">
-                    {/* head */}
-                    <tbody>
-                        {/* row 1 */}
-                        <tr>
-                            <td>
-                                <div className="flex items-center space-x-3">
-                                    <div className="avatar">
-                                        <div className="mask w-12 h-12">
-                                            <img src={image} alt="Avatar Tailwind CSS Component" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="font-bold">Hart Hagerty</div>
-                                        <div className="flex">
-                                            <div>
-                                                <h3>Best seller: Asadullah</h3>
-                                            </div>
-                                            <div className="text-sm opacity-50">Total Hours: 10</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="flex justify-between">
-                                    <Rating name="read-only" value={value} readOnly
-                                    // onChange={(event, newValue) => {
-                                    //     setValue(newValue);
-                                    // }}
-                                    />
-                                    <div>
-                                        <button onClick={handleApproved}><CheckBoxIcon className="text-blue-600 me-4" /></button>
-                                        <button onClick={() => window.my_modal_1.showModal()}><CancelIcon className="text-blue-600" /></button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div className="flex justify-center align-middle">
-                                    <GroupIcon />
-                                    <h2>500</h2>
-                                </div>
-                            </td>
-                            <th>
-                                <div>
-                                    <button> <FavoriteBorderIcon /></button>
-                                </div>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                  </TableCell>
+                  <TableCell align="right">{row.doc_name}</TableCell>
+                  <TableCell align="right">{row.category}</TableCell>
+                  <TableCell align="right">
+                    <button
+                      onClick={() => downloadFile(row)}
+                      className="bg-transparent border-0 "
+                    >
+                      <ArrowDownwardIcon />
+                    </button>
+                  </TableCell>
+                  <TableCell align="right">
+                    <div className="flex items-center justify-end gap-4">
+                      <button
+                        onClick={() => approveDoc(row)}
+                        className="bg-transparent border-0 "
+                      >
+                        <AddTaskIcon style={{ color: "#1E3A8A" }} />
+                      </button>
+                      <button
+                        onClick={() => cancelDoc(row)}
+                        className="bg-transparent border-0 "
+                      >
+                        <CancelIcon style={{ color: "red" }} />
+                      </button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
     );
+  };
+  const approvedTable = (d) => {
+    return (
+      <>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="right">Document</TableCell>
+                <TableCell align="right">Category</TableCell>
+                <TableCell align="right">Download</TableCell>
+                <TableCell align="right">Manage</TableCell>
+                {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {d?.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <div className="flex items-center gap-2">
+                      <Avatar
+                        alt="Travis Howard"
+                        src={`${base}/${row.thumb}`}
+                      />
+                      <p className="text-[1em]">{row.uploader_name} </p>
+                    </div>
+                  </TableCell>
+                  <TableCell align="right">{row.doc_name}</TableCell>
+                  <TableCell align="right">{row.category}</TableCell>
+                  <TableCell align="right">
+                  <button
+                      onClick={() => downloadFile(row)}
+                      className="bg-transparent border-0 "
+                    >
+                      <ArrowDownwardIcon />
+                    </button>
+                    </TableCell>
+
+                  <TableCell align="right">
+                    <button
+                      onClick={() => deleteDoc(row)}
+                      className="bg-transparent border-0 "
+                    >
+                      <DeleteIcon style={{ color: "red" }} />
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  };
+  const others = (d) => {
+    return (
+      <>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="right">Document</TableCell>
+                <TableCell align="right">Category</TableCell>
+                <TableCell align="right">Download</TableCell>
+                <TableCell align="right">Manage</TableCell>
+                {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {d?.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <div className="flex items-center gap-2">
+                      <Avatar
+                        alt="Travis Howard"
+                        src={`${base}/${row.thumb}`}
+                      />
+                      <p className="text-[1em]">{row.uploader_name} </p>
+                    </div>
+                  </TableCell>
+                  <TableCell align="right">{row.doc_name}</TableCell>
+                  <TableCell align="right">{row.category}</TableCell>
+                  <TableCell align="right">
+                  <button
+                      onClick={() => downloadFile(row)}
+                      className="bg-transparent border-0 "
+                    >
+                      <ArrowDownwardIcon />
+                    </button>
+                    </TableCell>
+
+                  <TableCell align="right">
+                    <button
+                      onClick={() => deleteDoc(row)}
+                      className="bg-transparent border-0 "
+                    >
+                      <DeleteIcon style={{ color: "red" }} />
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  };
+
+  return (
+    <div>
+      {/* modal */}
+      {/* Open the modal using ID.showModal() method */}
+      {/* <button className="btn" onClick={() => window.my_modal_1.showModal()}>open modal</button> */}
+      <dialog id="my_modal_1" className="modal">
+        <form method="dialog" className="modal-box ">
+          <h3 className="font-bold text-lg mb-4">Item Name: {data.name}</h3>
+          <img className="mb-4" src={data.image} alt="" />
+          <input type="file" name="file" id="" />
+          <br />
+          <input
+            className="btn btn-outline btn-success mt-2"
+            type="submit"
+            value="Submit"
+          />
+          {/* <h2 className="font-semibold">Click For Decline:  <button><CancelIcon className="text-blue-600 me-4" /></button></h2> */}
+          <div className="modal-action">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn">Close</button>
+          </div>
+        </form>
+      </dialog>
+
+      <Box sx={{ width: "100%", typography: "body1" }}>
+        <TabContext value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="Pending" value="1" />
+              <Tab label="Approved" value="2" />
+              <Tab label="Cancelled" value="3" />
+              <Tab label="others" value="4" />
+            </TabList>
+          </Box>
+          <TabPanel value="1">{tableData(pending)}</TabPanel>
+          <TabPanel value="2">{approvedTable(approved)}</TabPanel>
+          <TabPanel value="3">{approvedTable(cancelled)}</TabPanel>
+          <TabPanel value="4">{others(allFiles)}</TabPanel> 
+        </TabContext>
+      </Box>
+    </div>
+  );
 };
 
 export default AllProducts;
