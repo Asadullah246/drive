@@ -25,7 +25,7 @@ const Card = () => {
                                 <img
                                     src={`${base}/${a.thumb}`}
                                     alt="doc"
-                                    className="w-full h-[250px]" 
+                                    className="w-full h-[250px]"
                                 />
                             </figure>
                             <div className="card-body px-3 ">
@@ -42,7 +42,7 @@ const Card = () => {
                                 <div className="card-actions justify-start">
                                     {/* <div className="badge badge-outline">Fashion</div> */}
                                     <div>
-                                        <LoadingButton loading={false} variant="contained" onClick={()=>singleDetails(a.id)} >
+                                        <LoadingButton loading={false} variant="contained" onClick={()=>singleDetails(a._id)} >
                                             See Details
                                         </LoadingButton>
                                     </div>

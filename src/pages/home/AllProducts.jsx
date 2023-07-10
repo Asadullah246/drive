@@ -176,11 +176,6 @@ const AllProducts = () => {
         URL.revokeObjectURL(url);
       });
 
-    // const fileUrl = 'https://example.com/path/to/file.pdf'; // Replace with your file URL
-    // const link = document.createElement('a');
-    // link.href = fileUrl;
-    // link.download = row.files[0]; // Specify the desired file name
-    // link.click();
   };
 
   const tableData = (d) => {
@@ -399,7 +394,7 @@ const AllProducts = () => {
           <TabPanel value="1">{tableData(pending)}</TabPanel>
           <TabPanel value="2">{approvedTable(approved)}</TabPanel>
           <TabPanel value="3">{approvedTable(cancelled)}</TabPanel>
-          <TabPanel value="4">{others(allFiles)}</TabPanel> 
+          <TabPanel value="4">{others(allFiles)}</TabPanel>
         </TabContext>
       </Box>
     </div>
