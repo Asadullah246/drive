@@ -35,13 +35,14 @@ const Dashboard = () => {
         <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden ml-2">
           <MenuIcon style={{ color: "white" }} />
         </label>
-       <div className="flex justify-start items-start gap-2 ml-4 ">
+       {/* <div className="flex justify-start items-start gap-2 ml-4 ">
        <Avatar sx={{bgcolor: "#F000B8"}}>{user?user.name?.substring(0, 2).toUpperCase():"NO"}</Avatar>
        <div>
         <h6 className="text-white font-bold mb-0 ">{user?.name}</h6>
         <p className="text-white ">{user?.email}</p>
        </div>
-       </div>
+       </div> */}
+       <h1 className="text-3xl font-bold text-[#F000B8] ml-6 ">TASK HERO</h1>
       </div>
 
       <div className="drawer lg:drawer-open">
@@ -65,6 +66,13 @@ const Dashboard = () => {
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80  h-full bg-[#E8EAED]  text-black pt-[100px] lg:pt-6 ">
             {/* Sidebar content here */}
+            <div className="flex justify-start items-start gap-2 ml-4 ">
+       <Avatar sx={{bgcolor: "#F000B8"}}>{user?user.name?.substring(0, 2).toUpperCase():"NO"}</Avatar>
+       <div className="mb-3">
+        <h6 className="text-[#1976D2] font-bold mb-0 text-[1.3em]">{user?.name}</h6> 
+        <p className="text-[#1976D2] ">{user?.email}</p>
+       </div>
+       </div>
 
             <li  className="mb-2 ">
               <Link to="/" style={{color:"#1976D2", fontWeight:700, fontSize:"1.1em "}}><HomeIcon/> Home</Link>

@@ -163,6 +163,7 @@ const Home = () => {
 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 place-items-center gap-4  mb-12 ">
 
 <TextField
+style={{width:"100%"}} 
     required
     id="outlined-required"
     label="Search"
