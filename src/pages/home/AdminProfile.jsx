@@ -2,6 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Avatar from '@mui/material/Avatar';
 import { AppContext } from "../../app.context";
+import axios from "axios";
+import base from "../../components/Database";
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import PeopleIcon from '@mui/icons-material/People';
 
 const AdminProfile = () => {
     const [user, setUser]=useState()
@@ -9,6 +14,9 @@ const AdminProfile = () => {
     const [a, setA]=useState([])
     const [r, setR]=useState([])
     const { sRefresh, setSRefresh, allFiles, setAllFiles} = useContext(AppContext);
+    const [members, setMembers] = useState([]);
+
+
 
     useEffect(() => {
       const getUser = JSON.parse(localStorage.getItem("driveUser"));
@@ -16,6 +24,17 @@ const AdminProfile = () => {
         setUser(getUser)
       }
     }, []);
+    useEffect(() => {
+        axios
+          .get(`${base}/member`)
+          .then(function (response) {
+            console.log("re", response.data);
+            setMembers(response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }, []);
 
     useEffect(() => {
 
@@ -48,23 +67,23 @@ const AdminProfile = () => {
         </div>
         <div className="profileBox flex justify-center items-center text-center rounded-md  ">
           <div>
-            <CloudUploadIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
+            <ThumbUpAltIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
             <h4 className="text-lg">Accepted</h4>
             <h4 className="text-2xl font-bold pb-2 text-[#1E3A8A] ">{a?.length}</h4>
           </div>
         </div>
         <div className="profileBox flex justify-center items-center text-center rounded-md  ">
           <div>
-            <CloudUploadIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
+            <ThumbDownAltIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
             <h4 className="text-lg">Rejected</h4>
             <h4 className="text-2xl font-bold pb-2 text-[#1E3A8A] ">{r?.length}</h4>
           </div>
         </div>
         <div className="profileBox flex justify-center items-center text-center rounded-md  ">
           <div>
-            <CloudUploadIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
+            <PeopleIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
             <h4 className="text-lg">Total Members</h4>
-            <h4 className="text-2xl font-bold pb-2 text-[#1E3A8A] ">{user?.point}</h4>
+            <h4 className="text-2xl font-bold pb-2 text-[#1E3A8A] ">{members?.length}</h4> 
           </div>
         </div>
       </div>

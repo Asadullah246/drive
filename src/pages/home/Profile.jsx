@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Avatar from '@mui/material/Avatar';
 import { AppContext } from "../../app.context";
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 const Profile = () => {
     const [user, setUser]=useState()
@@ -54,21 +57,21 @@ const Profile = () => {
         </div>
         <div className="profileBox flex justify-center items-center text-center rounded-md  ">
           <div>
-            <CloudUploadIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
+            <ThumbUpAltIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
             <h4 className="text-lg">Accepted</h4>
             <h4 className="text-2xl font-bold pb-2 text-[#1E3A8A] ">{a?.length}</h4>
           </div>
         </div>
         <div className="profileBox flex justify-center items-center text-center rounded-md  ">
           <div>
-            <CloudUploadIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
+            <ThumbDownAltIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
             <h4 className="text-lg">Rejected</h4>
             <h4 className="text-2xl font-bold pb-2 text-[#1E3A8A] ">{r?.length}</h4>
           </div>
         </div>
         <div className="profileBox flex justify-center items-center text-center rounded-md  ">
           <div>
-            <CloudUploadIcon style={{ fontSize: "6em", color: "#1E3A8A" }} />
+            <PointOfSaleIcon style={{ fontSize: "6em", color: "#1E3A8A" }} /> 
             <h4 className="text-lg">Points</h4>
             <h4 className="text-2xl font-bold pb-2 text-[#1E3A8A] ">{user?.point}</h4>
           </div>

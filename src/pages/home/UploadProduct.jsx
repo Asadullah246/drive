@@ -73,6 +73,7 @@ const UploadProduct = () => {
         formData.append('uploader_name', user.name);
         formData.append('uploader_email',user.email);
         formData.append('status',"pending");
+        formData.append('downloads',0); 
 
 
         axios
@@ -88,7 +89,7 @@ const UploadProduct = () => {
           axios
             .patch(`${base}/member/${user._id}`, updateUser)
             .then(function (response) {
-              // ToastSuccess("profile updated"); 
+              // ToastSuccess("profile updated");
               reInstallUser();
 
               // console.log(response);

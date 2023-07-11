@@ -108,8 +108,9 @@ const ProductDetails = () => {
         axios
           .patch(`${base}/member/${user._id}`, updateUser)
           .then(function (response) {
-            // ToastSuccess("profile updated"); 
+            // ToastSuccess("profile updated");
             reInstallUser();
+            udpateProduct(row)
 
             // console.log(response);
           })
@@ -120,6 +121,24 @@ const ProductDetails = () => {
        }
       });
   };
+  const udpateProduct=(da)=>{
+    const body = {
+      downloads: da.downloads? da.downloads +1 :1,
+    };
+
+    axios
+      .put(`${base}/files/${da._id}`, body)
+      .then(function (response) {
+        // setRefresh(!refresh);
+        // ToastSuccess("Successfully file cancelled");
+
+        console.log("file updated downloads");  
+      })
+      .catch(function (error) {
+        ToastError(error?.message);
+        console.log(error);
+      });
+  }
 
   const reInstallUser = () => {
     axios
