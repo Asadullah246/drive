@@ -13,6 +13,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/home/Login";
 import RequireAuth from "./components/RequireAuth";
 import AllMember from "./pages/home/AllMember";
+import Profile from "./pages/home/Profile";
+import AdminProfile from "./pages/home/AdminProfile";
 
 function App() {
   return (
@@ -48,8 +50,10 @@ function App() {
           ></Route>
           <Route path="/mydoc" element={<RequireAuth><MyDoc></MyDoc></RequireAuth>}></Route>
           <Route path="/alluser" element={<RequireAuth><AllMember></AllMember></RequireAuth>}></Route>
+          <Route path="/profile" element={<RequireAuth><Profile></Profile></RequireAuth>}></Route>
+          <Route path="/admin-profile" element={<RequireAuth><AdminProfile></AdminProfile></RequireAuth>}></Route>
           <Route path="/allfiles" element={<RequireAuth><AllProducts /></RequireAuth>}></Route>
-        </Route>
+        </Route> 
       </Routes>
     </>
   );

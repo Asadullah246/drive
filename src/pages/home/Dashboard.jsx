@@ -9,6 +9,7 @@ import AudioFileIcon from '@mui/icons-material/AudioFile';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Person3Icon from '@mui/icons-material/Person3';
 
 const Dashboard = () => {
   const [user, setUser]=useState()
@@ -62,7 +63,7 @@ const Dashboard = () => {
             <div className="h-[50px] md:h-[80px] w-full "></div>
           </div>
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 pt-6  h-full bg-[#E8EAED]  text-black ">
+          <ul className="menu p-4 w-80  h-full bg-[#E8EAED]  text-black pt-[100px] lg:pt-6 ">
             {/* Sidebar content here */}
 
             <li  className="mb-2 ">
@@ -90,6 +91,19 @@ const Dashboard = () => {
               <Link to="/alluser" style={{color:"#1976D2", fontWeight:700, fontSize:"1.1em "}}> <BeenhereIcon/> All Member</Link>
             </li>
             }
+             {
+              user?.role == "user" &&
+              <li className="mb-2 ">
+              <Link to="/profile" style={{color:"#1976D2", fontWeight:700, fontSize:"1.1em "}}><Person3Icon/> My Profile</Link>
+            </li >
+            }
+             {
+              user?.role == "admin" &&
+              <li className="mb-2 ">
+              <Link to="/admin-profile" style={{color:"#1976D2", fontWeight:700, fontSize:"1.1em "}}><Person3Icon/> Statistics</Link>
+            </li >
+            }
+
             <li className="mb-2 " style={{color:"#1976D2", fontWeight:700, fontSize:"1.1em "}}>
               <button onClick={logout}><LogoutIcon/> Log out</button>
             </li>
