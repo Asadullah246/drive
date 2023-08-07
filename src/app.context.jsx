@@ -4,12 +4,14 @@ import base from "./components/Database";
 
 export const AppContext = createContext({});
 export const AppContextProvider = ({ children }) => {
-    const [allFiles, setAllFiles] = useState([]);
-    const [allFiles2, setAllFiles2] = useState([]);
-    const [refresh, setRefresh]=useState(false)
-      const [allData2, setAllData2 ] = useState([]);
-      const [sRefresh, setSRefresh]=useState(false)
-
+  const [allFiles, setAllFiles] = useState([]);
+  const [allFiles2, setAllFiles2] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const [allData2, setAllData2] = useState([]);
+  const [sRefresh, setSRefresh] = useState(false);
+  const [mostD, setMostD]=useState([])
+  const [users, setUsers]=useState([])
+  const [uRef,setURef]=useState(false)
 
   const context = {
     allFiles,
@@ -18,8 +20,16 @@ export const AppContextProvider = ({ children }) => {
     setRefresh,
     allData2,
     setAllData2,
-    sRefresh, setSRefresh,
-    allFiles2, setAllFiles2
+    sRefresh,
+    setSRefresh,
+    allFiles2,
+    setAllFiles2,
+    mostD,
+    setMostD,
+    users,
+    setUsers,
+    setURef,
+    uRef
   };
   useEffect(() => {
     axios
@@ -27,17 +37,46 @@ export const AppContextProvider = ({ children }) => {
       .then(function (response) {
         // console.log("re", response)
         setAllFiles(response.data);
-        const alld=(response.data)
-        console.log("all",alld); 
-        const filtered=alld.filter(f=>f.status=="approved")
-        console.log("fi",filtered);
-        setAllFiles2(filtered)
+        const alld = response.data;
+        console.log("all", alld);
+        const filtered = alld.filter((f) => f.status == "approved");
+        setAllFiles2(filtered);
+        const mostDownloaded = alld.slice();
+
+        // Sort the copied array based on the "downloads" field
+        mostDownloaded.sort((a, b) => {
+          if (a.downloads === undefined && b.downloads === undefined) {
+            return 0;
+          }
+          if (a.downloads === undefined) {
+            return 1;
+          }
+          if (b.downloads === undefined) {
+            return -1;
+          }
+          return b.downloads - a.downloads;
+        });
+
+        console.log("most", mostDownloaded );
+        setMostD(mostDownloaded)
       })
+
       .catch(function (error) {
         console.log(error);
       });
   }, [refresh]);
 
+  useEffect(() => {
+    axios
+      .get(`${base}/member`)
+      .then(function (response) {
+        console.log("re", response.data);
+        setUsers(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [uRef]);
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 };

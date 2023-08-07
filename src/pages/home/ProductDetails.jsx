@@ -13,23 +13,7 @@ import base from "../../components/Database";
 import { AppContext } from "../../app.context";
 import ToastSuccess, { ToastError } from "../../components/Toast";
 
-const data = {
-  id: 1,
-  name: "product 1",
-  category: "cat 1",
-  sub_category: "sub cat-10",
-  sub_sub_category: "sub sub cat-1",
-  price: 300,
-  uploader: "Miras",
-  description:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Libero iure autem porro nesciunt minus maxime odio adipisci repellat maiores at! ",
-  review: [],
-  image: testImage,
-  learning_subject: [],
-  total_view: 10,
-  regular_price: 500,
-  rating: 4,
-};
+
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -59,7 +43,7 @@ const ProductDetails = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }, [id, sRefresh]);
+  }, [id, sRefresh, localRef ]);
 
   useEffect(() => {
     if (allRating) {
@@ -121,6 +105,27 @@ const ProductDetails = () => {
        }
       });
   };
+
+
+  const buyBtn =(d)=>{
+    console.log("payment clicked ", d );
+    const body={
+      ...d,
+      buyer:user.email
+    }
+    axios
+    .post(`${base}/order`, body)
+    .then(function (response) {
+      // setRefreshP(!refreshP);
+      // ToastSuccess("Successfully updated"); 
+      console.log("res url is ", response.data.url);
+      window.location.replace(response.data.url);
+    })
+    .catch(function (error) {
+      console.log(error?.message);
+      // ToastError(error?.message);
+    });
+  }
   const udpateProduct=(da)=>{
     const body = {
       downloads: da.downloads? da.downloads +1 :1,
@@ -132,7 +137,7 @@ const ProductDetails = () => {
         // setRefresh(!refresh);
         // ToastSuccess("Successfully file cancelled");
 
-        console.log("file updated downloads");  
+        console.log("file updated downloads");
       })
       .catch(function (error) {
         ToastError(error?.message);
@@ -207,6 +212,7 @@ const ProductDetails = () => {
                 Total Downloads:{" "}
                 <span className="font-semibold">{p?.downloads || 0}</span>
               </h2>
+              <p className='font-bold'>Price : {p?.price} TK</p>
             </div>
             {/* <div className='mt-6'>
                             <h2 className='text-xl font-semibold'>Payment options</h2>
@@ -227,21 +233,30 @@ const ProductDetails = () => {
       <div className="bg-gray-100 mt-8 p-0">
         <div className="max-w-xl mx-auto justify-center flex pt-8">
           <span className="me-2">
-            {/* <Button variant="contained" color="success" style={{paddingLeft:"50px",  paddingRight:"50px"}}>
-                            Download
-                        </Button> */}
+           {
+            Number(user?.point )> 0 ?
             <button
-              onClick={() => downloadFile(p)}
-              className="bg-[#1976D2] text-white rounded-md py-2 font-bold text-lg  px-14 "
-            >
-              Download{" "}
-            </button>
+            onClick={() => downloadFile(p)}
+            className="bg-[#1976D2] text-white rounded-md py-2 font-bold text-lg  px-14 text-center  "
+          >
+            Download{" "}
+          </button>
+
+          :
+          <div className="text-center ">
+          <p className="text-red-500 mb-2">You can not download at this moment</p>
+          <button
+            onClick={() => buyBtn(p)}
+            className="bg-[#1976D2] text-white rounded-md py-2 font-bold text-lg  px-14 "
+          >
+            Buy now {" "}
+          </button>
+         </div>
+
+           }
+
           </span>
-          {/* <span className='me-2'>
-                        <Button variant="contained" color="success">
-                            Reviews
-                        </Button>
-                    </span> */}
+
         </div>
         <div className="max-w-6xl mx-auto">
           <div className="pt-8">

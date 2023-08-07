@@ -70,13 +70,19 @@ const Login = () => {
       console.log("exist", existing);
       if (existing) {
        ToastError("This email already used")
+       setLoad(false)
         return;
+      }
+      if(!(t.email.value.includes("@diu.edu.bd"))){
+        ToastError("Only diu college's email is available")
+        setLoad(false)
+        return; 
       }
       const body = {
         name:t.name.value,
         email: t.email.value,
         password: t.password.value,
-        role: "user", 
+        role: "user",
         point:3
 
       };

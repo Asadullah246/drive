@@ -73,7 +73,7 @@ const UploadProduct = () => {
         formData.append('uploader_name', user.name);
         formData.append('uploader_email',user.email);
         formData.append('status',"pending");
-        formData.append('downloads',0); 
+        formData.append('downloads',0);
 
 
         axios
@@ -123,7 +123,7 @@ const UploadProduct = () => {
 
   return (
     <div>
-      <h4 className="text-3xl"> Upload Document</h4>
+      <h4 className="text-3xl font-bold mb-12 "> Upload Document</h4>
       <div className=" w-full lg:w-[600px]">
         <form action="" className="my-8 w-full uploadForm" onSubmit={upload}>
           <div className="w-full flex justify-between items-center gap-4 mb-4">

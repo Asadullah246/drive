@@ -31,31 +31,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 
 // data for modal
-const data = {
-  id: 1,
-  name: "product 1",
-  category: "cat 1",
-  sub_category: "sub cat-10",
-  sub_sub_category: "sub sub cat-1",
-  price: 300,
-  uploader: "Miras",
-  description: "this is a test product",
-  // review: [], // nise korsi nite ta delete kore diyo
-  image: testImage,
-  learning_subject: [],
-  total_view: 10,
 
-  // ami add korlam
-  regular_price: 500,
-  status: "In Stock",
-  rating: 4,
-
-  // reviews
-  descriptions:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi commodi hic nam placeat voluptates cupiditate nostrum eius rem rerum.",
-  author: "Jakir",
-  time: "on Feb 2023",
-};
 
 const MyDoc = () => {
   const [value, setValue] = useState("1");
@@ -64,6 +40,7 @@ const MyDoc = () => {
   const [approved, setApproved] = useState([]);
   const [cancelled, setCancelled] = useState([]);
   const [myDocs, setMyDocs]=useState([])
+  const [myown, setMyown]=useState([])
   const [user, setUser]=useState()
   useEffect(() => {
     const getUser = JSON.parse(localStorage.getItem("driveUser"));
@@ -87,6 +64,21 @@ const MyDoc = () => {
     });
    }
   }, [user]);
+  useEffect(() => {
+   if(user){
+    axios
+    .get(`${base}/order/${user.email}`)
+    .then(function (response) {
+      // console.log("re", response)
+      setMyown(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+   }
+  }, [user]);
+
+  console.log("own", myown );
 
   useEffect(() => {
     const pend = myDocs?.filter((f) => f.status == "pending");
@@ -106,42 +98,42 @@ const MyDoc = () => {
   };
 
 
-  const approveDoc = (row) => {
-    const body = {
-      status: "approved",
-    };
+  // const approveDoc = (row) => {
+  //   const body = {
+  //     status: "approved",
+  //   };
 
-    axios
-      .patch(`${base}/files/${row._id}`, body)
-      .then(function (response) {
-        setRefresh(!refresh);
-        ToastSuccess("Successfully file cancelled");
+  //   axios
+  //     .patch(`${base}/files/${row._id}`, body)
+  //     .then(function (response) {
+  //       setRefresh(!refresh);
+  //       ToastSuccess("Successfully file cancelled");
 
-        // console.log(response);
-      })
-      .catch(function (error) {
-        ToastError(error?.message);
-        console.log(error);
-      });
-  };
-  const cancelDoc = (row) => {
-    const body = {
-      status: "cancelled",
-    };
+  //       // console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       ToastError(error?.message);
+  //       console.log(error);
+  //     });
+  // };
+  // const cancelDoc = (row) => {
+  //   const body = {
+  //     status: "cancelled",
+  //   };
 
-    axios
-      .patch(`${base}/files/${row._id}`, body)
-      .then(function (response) {
-        setRefresh(!refresh);
-        ToastSuccess("Successfully file cancelled");
+  //   axios
+  //     .patch(`${base}/files/${row._id}`, body)
+  //     .then(function (response) {
+  //       setRefresh(!refresh);
+  //       ToastSuccess("Successfully file cancelled");
 
-        // console.log(response);
-      })
-      .catch(function (error) {
-        ToastError(error?.message);
-        console.log(error);
-      });
-  };
+  //       // console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       ToastError(error?.message);
+  //       console.log(error);
+  //     });
+  // };
   const deleteDoc = (row) => {
     axios
       .delete(`${base}/files/${row._id}`)
@@ -225,8 +217,64 @@ const MyDoc = () => {
                       className="bg-transparent border-0 "
                     >
                       <DeleteIcon style={{ color: "red" }} />
-                    </button> 
+                    </button>
                   </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </>
+    );
+  };
+  const tableData2 = (d) => {
+    return (
+      <>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="right">Document</TableCell>
+                <TableCell align="right">Category</TableCell>
+                <TableCell align="right">Download</TableCell>
+                {/* <TableCell align="right">Manage</TableCell> */}
+                {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {d?.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <div className="flex items-center gap-2">
+                      <Avatar
+                        alt="Travis Howard"
+                        src={`${base}/${row.thumb}`}
+                      />
+                      <p className="text-[1em]">{row.uploader_name} </p>
+                    </div>
+                  </TableCell>
+                  <TableCell align="right">{row.doc_name}</TableCell>
+                  <TableCell align="right">{row.category}</TableCell>
+                  <TableCell align="right">
+                    <button
+                      onClick={() => downloadFile(row)}
+                      className="bg-transparent border-0 "
+                    >
+                      <ArrowDownwardIcon />
+                    </button>
+                  </TableCell>
+                  {/* <TableCell align="right">
+                  <button
+                      onClick={() => deleteDoc(row)}
+                      className="bg-transparent border-0 "
+                    >
+                      <DeleteIcon style={{ color: "red" }} />
+                    </button>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
@@ -298,24 +346,7 @@ const MyDoc = () => {
       {/* modal */}
       {/* Open the modal using ID.showModal() method */}
       {/* <button className="btn" onClick={() => window.my_modal_1.showModal()}>open modal</button> */}
-      <dialog id="my_modal_1" className="modal">
-        <form method="dialog" className="modal-box ">
-          <h3 className="font-bold text-lg mb-4">Item Name: {data.name}</h3>
-          <img className="mb-4" src={data.image} alt="" />
-          <input type="file" name="file" id="" />
-          <br />
-          <input
-            className="btn btn-outline btn-success mt-2"
-            type="submit"
-            value="Submit"
-          />
-          {/* <h2 className="font-semibold">Click For Decline:  <button><CancelIcon className="text-blue-600 me-4" /></button></h2> */}
-          <div className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn">Close</button>
-          </div>
-        </form>
-      </dialog>
+
 
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={value}>
@@ -324,11 +355,13 @@ const MyDoc = () => {
               <Tab label="Pending" value="1" />
               <Tab label="Approved" value="2" />
               <Tab label="Cancelled" value="3" />
+              <Tab label="My owned" value="4" />
             </TabList>
           </Box>
           <TabPanel value="1">{tableData(pending)}</TabPanel>
           <TabPanel value="2">{approvedTable(approved)}</TabPanel>
           <TabPanel value="3">{approvedTable(cancelled)}</TabPanel>
+          <TabPanel value="4">{tableData2(myown)}</TabPanel>
         </TabContext>
       </Box>
     </div>
